@@ -10,9 +10,9 @@ import java.util.Scanner;
 import oracle.jdbc.driver.OracleDriver;
 
 public class JDBCMain05 {
-	// 1. DB¿¡ »ç¿ëµÉ »ó¼öµé   //º¹ºÙ !
+	// 1. DBì— ì‚¬ìš©ë  ìƒìˆ˜ë“¤   
 	public static final String URL = 
-						"jdbc:oracle:thin:@localhost:1521:orcl"; // Á¢¼ÓÇÒ ¿À¶óÅ¬ DB °æ·Î ..??
+						"jdbc:oracle:thin:@localhost:1521:orcl"; // ì ‘ì†í•  ì˜¤ë¼í´ DB ê²½ë¡œ ..??
 	public static final String USER = "scott";
 	public static final String PASSWORD = "tiger";
 		
@@ -22,50 +22,50 @@ public class JDBCMain05 {
 	public static final String COL_PHONE = "phone";
 	public static final String COL_EMAIL = "email";	
 	
-			// delete : cid ¹øÈ£·Î °Ë»öÇØ¼­ µ¥ÀÌÅÍ »èÁ¦
+			// delete : cid ë²ˆí˜¸ë¡œ ê²€ìƒ‰í•´ì„œ ë°ì´í„° ì‚­ì œ
 			// delete form ex_contact where cid = ?
 			public static final String SQL_DELETE = 
 					"delete from " + TABLE_NAME + " where " + COL_CID + " = ?";
 			
-			// select : cid ¹øÈ£·Î °Ë»öÇØ¼­ µ¥ÀÌÅÍ ¼±ÅÃ
+			// select : cid ë²ˆí˜¸ë¡œ ê²€ìƒ‰í•´ì„œ ë°ì´í„° ì„ íƒ
 			// select * from ex_contact where cid = ?
 			public static final String SQL_SELECT_BY_CID =
 					"select * from " + TABLE_NAME + " where " + COL_CID + " = ?";
 	
 	
 	public static void main(String[] args) {
-		// Å°º¸µå ÀÔ·Â ÁØºñ
+		// í‚¤ë³´ë“œ ì…ë ¥ ì¤€ë¹„
 				Scanner sc = new Scanner(System.in);
 				
 				Connection conn = null;
 				PreparedStatement pstmt = null;
-				ResultSet rs = null; // import Á¾·ùÈ®ÀÎ
+				ResultSet rs = null; // import ì¢…ë¥˜í™•ì¸
 				try {
-					// 2. JDBC µå¶óÀÌ¹ö¸¦ µî·Ï(¸Ş¸ğ¸®¿¡ ·Îµå)
+					// 2. JDBC ë“œë¼ì´ë²„ë¥¼ ë“±ë¡(ë©”ëª¨ë¦¬ì— ë¡œë“œ)
 					DriverManager.registerDriver(new OracleDriver());
-					System.out.println("µå¶óÀÌ¹ö µî·Ï ¼º°ø");
+					System.out.println("ë“œë¼ì´ë²„ ë“±ë¡ ì„±ê³µ");
 					
-					// 3. DB ¿¬°á(Connection)
+					// 3. DB ì—°ê²°(Connection)
 					conn = DriverManager.getConnection(URL, USER, PASSWORD);
-					System.out.println("DB ¿¬°á ¼º°ø");
+					System.out.println("DB ì—°ê²° ì„±ê³µ");
 					
-					// 4. PreparedStatement °´Ã¼ »ı¼º
+					// 4. PreparedStatement ê°ì²´ ìƒì„±
 					pstmt = conn.prepareStatement(SQL_SELECT_BY_CID);
 					
-					// µ¥ÀÌÅÍ¸¦ ÀÔ·Â
-					System.out.println("°Ë»öÇÒ ÀÎµ¦½º ÀÔ·Â>");
+					// ë°ì´í„°ë¥¼ ì…ë ¥
+					System.out.println("ê²€ìƒ‰í•  ì¸ë±ìŠ¤ ì…ë ¥>");
 					int cid = sc.nextInt();
-					sc.nextLine(); // ¼ıÀÚ µÚ¿¡ ÀÔ·ÂµÈ ¿£ÅÍ¸¦ Á¦°Å					
+					sc.nextLine(); // ìˆ«ì ë’¤ì— ì…ë ¥ëœ ì—”í„°ë¥¼ ì œê±°					
 					
 					
-					// 5. SQL ¹®ÀåÀ» ¿Ï¼º - SQL_SELECT_BY_CID ÀÇ ?¸¦ Ã¤¿öÁÖ´Â ÄÚµå  ¡Ú¡Ú
+					// 5. SQL ë¬¸ì¥ì„ ì™„ì„± - SQL_SELECT_BY_CID ì˜ ?ë¥¼ ì±„ì›Œì£¼ëŠ” ì½”ë“œ  â˜…â˜…
 					
 					pstmt.setInt(1, cid);
 					
-					// 6. SQL ¹®Àå ½ÇÇà(DB ¼­¹ö·Î Àü¼Û)
+					// 6. SQL ë¬¸ì¥ ì‹¤í–‰(DB ì„œë²„ë¡œ ì „ì†¡)
 					rs = pstmt.executeQuery();
 					
-					// 7. °á°ú È®ÀÎ
+					// 7. ê²°ê³¼ í™•ì¸
 					if(rs.next()) {
 						String name = rs.getString(COL_NAME);
 						String phone = rs.getString(COL_PHONE);
